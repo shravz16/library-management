@@ -2,7 +2,7 @@ package com.demo.library.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class User {
     private String username;
     private String password;

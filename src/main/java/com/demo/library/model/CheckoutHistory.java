@@ -3,7 +3,7 @@ package com.demo.library.model;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-@Component
+
 public class CheckoutHistory {
     private Long id;
     private String username;

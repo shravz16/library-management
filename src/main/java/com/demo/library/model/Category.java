@@ -2,7 +2,7 @@ package com.demo.library.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class Category {
     private Long id;
     private String name;

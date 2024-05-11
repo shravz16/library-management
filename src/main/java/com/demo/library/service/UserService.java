@@ -12,7 +12,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
+
 
 
     // Method to register a new user
