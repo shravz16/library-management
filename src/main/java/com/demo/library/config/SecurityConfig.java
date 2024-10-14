@@ -19,18 +19,6 @@ public class SecurityConfig {
 
         return registrationBean;
     }
-    @Bean
-    public String defaultUsername() {
-        return "defaultUser"; // Example default username
-    }
 
-    @Bean
-    public Long defaultID() {
-        return -1L; // Example default username
-    }
-    @Bean
-    public LocalDateTime defaultTime(){
-        return LocalDateTime.now();
-    }
 
 }
