@@ -5,6 +5,7 @@ import com.demo.library.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,7 +17,7 @@ public class CategoryController {
 
     // Get all categories
     @GetMapping
-    public Map<Long, Category> getCategories() {
+    public List<Category> getCategories() {
         return categoryService.findAll();
     }
 

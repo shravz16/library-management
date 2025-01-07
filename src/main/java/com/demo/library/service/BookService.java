@@ -5,7 +5,9 @@ import com.demo.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -19,17 +21,17 @@ public class BookService {
     }
 
     // Find a book by ID
-    public Book findById(Long id) {
+    public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
     }
 
     // Get all books
-    public Map<Long, Book> findAll() {
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
     // Delete a book by ID
     public void delete(Long id) {
-        bookRepository.delete(id);
+        bookRepository.deleteById(id);
     }
 }

@@ -5,6 +5,7 @@ import com.demo.library.service.CheckoutHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,7 +24,7 @@ public class CheckoutHistoryController {
 
     // Get all checkout histories
     @GetMapping
-    public Map<Long, CheckoutHistory> getCheckoutHistories() {
+    public List<CheckoutHistory> getCheckoutHistories() {
         return checkoutHistoryService.findAll();
     }
 

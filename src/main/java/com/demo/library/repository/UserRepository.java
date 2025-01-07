@@ -1,20 +1,24 @@
 package com.demo.library.repository;
 
-import com.demo.library.model.User;
+import com.demo.library.model.LibraryUser;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
+import java.util.List;
 
 @Repository
-public class UserRepository {
-    private Map<String, User> users = new HashMap<>();
+public interface UserRepository extends JpaRepository<LibraryUser, Long> {
 
-    public void save(User user) {
-        users.put(user.getUsername(), user);
-    }
+    // Existing methods
+    LibraryUser findByUsername(String username);
+    boolean existsByUsername(String username);
+    Optional<LibraryUser> findByEmail(String email);
+    List<LibraryUser> findByNameContainingIgnoreCase(String name);
+    boolean existsByEmail(String email);
+    List<LibraryUser> findAllByOrderByUsernameAsc();
+    List<LibraryUser> findByActive(boolean active);
+    void deleteByUsername(String username);
 
-    public User findByUsername(String username) {
-        return users.get(username);
-    }
+    // Method for login (find by email only, password check will be in service)
+    Optional<LibraryUser> findByEmailAndActive(String email, boolean active);
 }

@@ -1,19 +1,45 @@
 package com.demo.library.model;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 
-
+@Entity
+@Table(name = "books")
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 255)
     private String title;
+
+    @Column(nullable = false, length = 255)
     private String author;
+
+    @Column(name = "checked_out", nullable = false)
     private boolean checkedOut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    // Default constructor required by JPA
+    public Book() {
+    }
 
     public Book(Long id, String title, String author) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.checkedOut = false; // Default to not checked out
+        this.checkedOut = false;
     }
 
     // Getters and Setters
@@ -47,5 +73,13 @@ public class Book {
 
     public void setCheckedOut(boolean checkedOut) {
         this.checkedOut = checkedOut;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

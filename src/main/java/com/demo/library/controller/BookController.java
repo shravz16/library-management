@@ -5,6 +5,7 @@ import com.demo.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,7 +17,7 @@ public class BookController {
 
 
     @GetMapping
-    public Map<Long, Book> getBooks() {
+    public List<Book> getBooks() {
         return bookService.findAll();
     }
 
@@ -30,7 +31,7 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book getBook(@PathVariable Long id) {
-        return bookService.findById(id);
+        return bookService.findById(id).get();
     }
 
 

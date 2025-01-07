@@ -1,37 +1,42 @@
 package com.demo.library.repository;
 
 import com.demo.library.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class CategoryRepository {
-    private Map<Long, Category> categories = new HashMap<>();
-    private Long currentId = 1L;
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    // Save or update a category
-    public Category save(Category category) {
-        if (category.getId() == null) {
-            category.setId(currentId++);
-        }
-        categories.put(category.getId(), category);
-        return category;
-    }
+    // Find category by name (case-insensitive)
+    Optional<Category> findByNameIgnoreCase(String name);
 
-    // Get a category by ID
-    public Category findById(Long id) {
-        return categories.get(id);
-    }
+    // Find categories by name containing (case-insensitive)
+    List<Category> findByNameContainingIgnoreCase(String namePart);
 
-    // Get all categories
-    public Map<Long, Category> findAll() {
-        return categories;
-    }
+    // Check if category exists by name
+    boolean existsByNameIgnoreCase(String name);
 
-    // Delete a category by ID
-    public void delete(Long id) {
-        categories.remove(id);
-    }
+    // Find all categories ordered by name
+    List<Category> findAllByOrderByNameAsc();
+
+    // Custom query to find categories with book count
+    @Query("SELECT c, COUNT(b) FROM Category c LEFT JOIN c.books b GROUP BY c")
+    List<Object[]> findAllWithBookCount();
+
+    // Custom query to find categories that have at least one book
+    @Query("SELECT DISTINCT c FROM Category c JOIN c.books b")
+    List<Category> findCategoriesWithBooks();
+
+    // Custom query to find categories with more than X books
+    @Query("SELECT c FROM Category c WHERE SIZE(c.books) > :count")
+    List<Category> findCategoriesWithMoreThanXBooks(@Param("count") int count);
+
+    // Find categories with no books
+    @Query("SELECT c FROM Category c WHERE c.books IS EMPTY")
+    List<Category> findCategoriesWithNoBooks();
 }

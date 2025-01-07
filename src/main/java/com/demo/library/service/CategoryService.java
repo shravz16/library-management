@@ -5,6 +5,7 @@ import com.demo.library.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -19,12 +20,12 @@ public class CategoryService {
     }
 
     // Get all categories
-    public Map<Long, Category> findAll() {
+    public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
     // Delete a category by ID
     public void delete(Long id) {
-        categoryRepository.delete(id);
+        categoryRepository.deleteById(id);
     }
 }

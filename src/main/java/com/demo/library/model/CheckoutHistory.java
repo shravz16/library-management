@@ -1,15 +1,36 @@
 package com.demo.library.model;
 
-import org.springframework.stereotype.Component;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "checkout_history")
 public class CheckoutHistory {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 100)
     private String username;
+
+    @Column(name = "book_id", nullable = false)
     private Long bookId;
+
+    @Column(name = "checkout_date", nullable = false)
     private LocalDateTime checkoutDate;
+
+    @Column(name = "return_date")
     private LocalDateTime returnDate;
+
+    // Default constructor required by JPA
+    public CheckoutHistory() {
+    }
 
     public CheckoutHistory(Long id, String username, Long bookId, LocalDateTime checkoutDate, LocalDateTime returnDate) {
         this.id = id;

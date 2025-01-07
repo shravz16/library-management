@@ -5,6 +5,7 @@ import com.demo.library.repository.CheckoutHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -19,12 +20,12 @@ public class CheckoutHistoryService {
     }
 
     // Get all checkout histories
-    public Map<Long, CheckoutHistory> findAll() {
+    public List<CheckoutHistory> findAll() {
         return checkoutHistoryRepository.findAll();
     }
 
     // Delete a checkout history by ID
     public void delete(Long id) {
-        checkoutHistoryRepository.delete(id);
+        checkoutHistoryRepository.deleteById(id);
     }
 }
