@@ -21,9 +21,10 @@ public class AuthController {
 
     // Login a user
     @PostMapping("/login")
-    public String login(@RequestBody LibraryUser user) {
-        LibraryUser existingUser = userService.findByUsername(user.getUsername());
-        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+    public String login(@RequestBody String username, @RequestBody String password) {
+        System.out.println(username+" "+password);
+        LibraryUser existingUser = userService.login(username,password).get();
+        if (existingUser != null) {
             return "Login successful!";
         }
         return "Invalid credentials!";
