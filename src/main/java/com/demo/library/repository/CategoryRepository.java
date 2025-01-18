@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     // Find category by name (case-insensitive)
-    Optional<Category> findByNameIgnoreCase(String name);
+    Category findByNameIgnoreCase(String name);
 
     // Find categories by name containing (case-insensitive)
     List<Category> findByNameContainingIgnoreCase(String namePart);

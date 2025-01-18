@@ -27,13 +27,15 @@ public class Book {
     @Column(name = "checked_out", nullable = false)
     private boolean checkedOut;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
+
 
     // Default constructor required by JPA
     public Book() {
     }
+
 
     public Book(Long id, String title, String author) {
         this.id = id;
@@ -82,4 +84,6 @@ public class Book {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }

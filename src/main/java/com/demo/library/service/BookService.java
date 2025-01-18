@@ -2,6 +2,7 @@ package com.demo.library.service;
 
 import com.demo.library.model.Book;
 import com.demo.library.repository.BookRepository;
+import com.demo.library.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
