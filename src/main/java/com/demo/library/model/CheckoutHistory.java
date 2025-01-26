@@ -28,6 +28,7 @@ public class CheckoutHistory {
     @Column(name = "return_date")
     private LocalDateTime returnDate;
 
+
     // Default constructor required by JPA
     public CheckoutHistory() {
     }

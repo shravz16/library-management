@@ -225,7 +225,8 @@
         fetch('/api/books/add', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'username': localStorage.getItem('username')
             },
             body: JSON.stringify(data)
         })
@@ -253,7 +254,8 @@
         fetch(`/api/books/update/${book}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                 'username': localStorage.getItem('username')
             },
            body: JSON.stringify({
                 checkOut: true

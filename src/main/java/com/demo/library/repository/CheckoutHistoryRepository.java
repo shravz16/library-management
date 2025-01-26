@@ -18,6 +18,7 @@ public interface CheckoutHistoryRepository extends JpaRepository<CheckoutHistory
     // Find checkouts by book ID
     List<CheckoutHistory> findByBookId(Long bookId);
 
+    void deleteByBookId(Long bookId);
     // Find current checkouts (where returnDate is null)
     List<CheckoutHistory> findByReturnDateIsNull();
 

@@ -60,6 +60,7 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Book Title</th>
                         <th>User</th>
                         <th>Checkout Date</th>
@@ -134,10 +135,11 @@
 
     function returnBook(id) {
         if(confirm('Are you sure you want to return this book?')) {
-            fetch(`/api/checkouts/${id}/return`, {
-                method: 'POST',
+            fetch(`/api/checkout-history/${id}`, {
+                method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'username': localStorage.getItem('username')
                 }
             })
             .then(response => {
@@ -181,6 +183,66 @@
     document.getElementById('dateFilter').addEventListener('change', function() {
         // Implement date filtering
     });
+    // Add to existing script
+function fetchCheckoutHistory() {
+   const username = localStorage.getItem('username');
+
+   fetch('/api/checkout-history/username', {
+       headers: {
+           'username': username
+       }
+   })
+  .then(response => response.json())
+.then(data => {
+    console.log(data)
+    const tbody = document.querySelector('tbody');
+
+    tbody.innerHTML = data.map(item => `
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.bookTitle}</td>
+            <td>${item.username}</td>
+            <td>${new Date(item.checkoutDate).toLocaleDateString()}</td>
+            <td>${new Date(item.returnDate).toLocaleDateString()}</td>
+            <td>${new Date(item.returnDate).toLocaleDateString()}</td>
+            <td>
+                ${getStatusBadge(item.ischeckedout)}
+            </td>
+            <td>
+                ${getActionButtons(item)}
+            </td>
+        </tr>
+    `).join('');
+})
+.catch(error => console.error('Error:', error));
+}
+
+function getStatusBadge(checkout) {
+   if (!checkout) {
+       return '<span class="badge bg-success">Yet to checkout</span>';
+   }
+   else{
+   return '<span class="badge bg-success">checked out</span>';
+   }
+
+}
+
+function getActionButtons(checkout) {
+   if (checkout) {
+       return `
+           <div class="btn-group">
+               <button class="btn btn-sm btn-success" onclick="returnBook(${checkout.id})">
+                   <i class="bi bi-check-circle"></i> Return
+               </button>
+
+           </div>
+       `;
+   }
+   return '';
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', fetchCheckoutHistory);
 </script>
 </body>
 </html>

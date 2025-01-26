@@ -10,6 +10,10 @@ public class HtmlController {
     public String loginPage() {
         return "login";
     }
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
 
     @GetMapping("/")
     public String home() {

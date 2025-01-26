@@ -1,5 +1,6 @@
 package com.demo.library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -27,8 +28,9 @@ public class Book {
     @Column(name = "checked_out", nullable = false)
     private boolean checkedOut;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonBackReference
     private Category category;
 
 
