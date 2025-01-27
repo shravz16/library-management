@@ -25,7 +25,7 @@ public class UserService {
 
     // Login functionality
     public Optional<LibraryUser> login(String email, String password) {
-        return userRepository.findByEmailAndActive(email, true)
+        return userRepository.findByEmail(email)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 
@@ -74,6 +74,10 @@ public class UserService {
     // Get all users
     public List<LibraryUser> findAll() {
         return userRepository.findAll();
+    }
+
+    public LibraryUser findByUserKey(String key){
+       return userRepository.findByPassword(key).get(0);
     }
 
     // Find user by ID

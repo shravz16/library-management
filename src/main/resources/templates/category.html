@@ -100,7 +100,12 @@
     document.addEventListener('DOMContentLoaded', fetchCategories);
 
 function fetchCategories() {
-    fetch('/api/categories')
+    fetch('/api/categories',{
+        method:'GET',
+        headers:{
+        'api-key':localStorage.getItem('api-key')
+        }
+        })
         .then(response => {
             if (!response.ok) throw new Error('Failed to fetch categories');
             return response.json();
@@ -140,7 +145,8 @@ function fetchCategories() {
         fetch('/api/categories/add', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'api-key':localStorage.getItem('api-key')
             },
             body: JSON.stringify(data)
         })
@@ -169,7 +175,8 @@ function fetchCategories() {
             fetch(`/api/categories/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'api-key':localStorage.getItem('api-key')
                 }
             })
             .then(response => {

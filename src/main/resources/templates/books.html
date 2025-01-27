@@ -103,7 +103,12 @@
 <script>
     // Fetch and display books
     function fetchBooks() {
-        fetch('/api/books')
+        fetch('/api/books',{
+        method:'GET',
+        headers:{
+        'api-key':localStorage.getItem('api-key')
+        }
+        })
             .then(response => response.json())
             .then(books => {
                 const tableBody = document.getElementById('booksTableBody');
@@ -142,7 +147,12 @@
 
     // Fetch and populate categories
     function fetchCategories() {
-        fetch('/api/categories')
+        fetch('/api/categories',{
+        method:'GET',
+        headers:{
+        'api-key':localStorage.getItem('api-key')
+        }
+        })
             .then(response => response.json())
             .then(categories => {
                 const filterSelect = document.getElementById('categoryFilter');
@@ -226,7 +236,8 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'username': localStorage.getItem('username')
+                'username': localStorage.getItem('username'),
+                'api-key':localStorage.getItem('api-key')
             },
             body: JSON.stringify(data)
         })
@@ -255,7 +266,8 @@
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                 'username': localStorage.getItem('username')
+                 'username': localStorage.getItem('username'),
+                 'api-key':localStorage.getItem('api-key')
             },
            body: JSON.stringify({
                 checkOut: true
@@ -281,7 +293,8 @@
             fetch(`/api/books/delete/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'api-key':localStorage.getItem('api-key')
                 }
             })
             .then(response => {

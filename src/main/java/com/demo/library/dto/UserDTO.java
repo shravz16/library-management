@@ -9,7 +9,7 @@ public class UserDTO {
     private String email;
     private boolean active;
     private int booksBorrowed;
-
+    private String password;
     public UserDTO() {
     }
 
@@ -20,6 +20,7 @@ public class UserDTO {
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
         dto.setActive(user.isActive());
+        dto.setPassword(user.getPassword());
         return dto;
     }
 
@@ -41,4 +42,25 @@ public class UserDTO {
 
     public int getBooksBorrowed() { return booksBorrowed; }
     public void setBooksBorrowed(int booksBorrowed) { this.booksBorrowed = booksBorrowed; }
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", active=" + active +
+                ", booksBorrowed=" + booksBorrowed +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

@@ -6,11 +6,14 @@ import com.demo.library.model.LibraryUser;
 import com.demo.library.service.CheckoutHistoryService;
 import com.demo.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,14 +35,33 @@ public class AuthController {
 
     // Login a user
     @PostMapping("/login")
-    public UserDTO login(@RequestBody String requestBody) throws UnsupportedEncodingException {
-        String email = java.net.URLDecoder.decode(requestBody.split("&")[0].split("=")[1], "UTF-8");
-        String password = java.net.URLDecoder.decode(requestBody.split("&")[1].split("=")[1], "UTF-8");
-        LibraryUser existingUser = userService.login(email,password).get();
-        if (existingUser != null) {
-            return  UserDTO.fromEntity(existingUser);
+    public ResponseEntity<?> login(@RequestBody String requestBody) throws UnsupportedEncodingException {
+        try {
+            // Log the incoming request
+            System.out.println("Received request body: " + requestBody);
+
+            String email = java.net.URLDecoder.decode(requestBody.split("&")[0].split("=")[1], "UTF-8");
+            String password = java.net.URLDecoder.decode(requestBody.split("&")[1].split("=")[1], "UTF-8");
+
+            System.out.println("Decoded email: " + email);
+            System.out.println("Decoded password: " + password);
+
+            Optional<LibraryUser> userOptional = userService.login(email, password);
+
+            if (userOptional.isPresent()) {
+                UserDTO userDTO = UserDTO.fromEntity(userOptional.get());
+                System.out.println("Returning user: " + userDTO);
+                return ResponseEntity.ok(userDTO);
+            } else {
+                System.out.println("User not found");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            }
+        } catch (Exception e) {
+            System.out.println("Error occurred: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
-        return null;
+
     }
     @GetMapping("/users/{username}")
     public UserDTO getUser(@PathVariable String username) {

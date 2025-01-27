@@ -16,8 +16,10 @@
     })
     .then(response => response.json())
     .then(data => {
+    console.log(data);
         if (data.username) {
             localStorage.setItem('username', data.username);
+            localStorage.setItem('api-key',data.password);
             window.location.href = '/books';
         } else {
             alert('Login failed');

@@ -174,7 +174,12 @@
     document.addEventListener('DOMContentLoaded', fetchUsers);
 
 function fetchUsers() {
-    fetch('/api/auth/users/'+localStorage.getItem('username'))
+    fetch('/api/auth/users/'+localStorage.getItem('username'),{
+        method:'GET',
+        headers:{
+        'api-key':localStorage.getItem('api-key')
+        }
+        })
         .then(response => response.json())
         .then(user => {
             const tbody = document.querySelector('tbody');
@@ -208,7 +213,12 @@ function fetchUsers() {
         .catch(error => console.error('Error:', error));
 }
     function editUser(id) {
-        fetch(`/api/users/`+id)
+        fetch(`/api/users/`+id,{
+        method:'GET',
+        headers:{
+        'api-key':localStorage.getItem('api-key')
+        }
+        })
             .then(response => response.json())
             .then(user => {
                 document.getElementById('editUserId').value = user.id;
@@ -229,7 +239,8 @@ function fetchUsers() {
         fetch(`/api/users/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'api-key':localStorage.getItem('api-key')
             },
             body: JSON.stringify(userData)
         })
@@ -242,7 +253,10 @@ function fetchUsers() {
 
     function toggleStatus(id) {
         fetch(`api/auth/users/toggle-status/${id}`, {
-            method: 'PUT'
+            method: 'PUT',
+            headers:{
+            'api-key':localStorage.getItem('api-key')
+            }
         })
         .then(response => {
             if(response.ok) {
@@ -254,7 +268,10 @@ function fetchUsers() {
     function deleteUser(id) {
         if(confirm('Are you sure you want to delete this user?')) {
             fetch(`/api/auth/users/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers:{
+                'api-key':localStorage.getItem('api-key')
+                }
             })
             .then(response => {
                 if(response.ok) {

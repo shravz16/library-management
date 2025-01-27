@@ -139,7 +139,8 @@
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': localStorage.getItem('username')
+                    'username': localStorage.getItem('username'),
+                    'api-key':localStorage.getItem('api-key')
                 }
             })
             .then(response => {
@@ -163,7 +164,8 @@
         fetch(`/api/checkouts/${currentCheckoutId}/extend`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'api-key':localStorage.getItem('api-key')
             },
             body: JSON.stringify({ newDueDate: newDueDate })
         })
@@ -189,7 +191,8 @@ function fetchCheckoutHistory() {
 
    fetch('/api/checkout-history/username', {
        headers: {
-           'username': username
+           'username': username,
+           'api-key':localStorage.getItem('api-key')
        }
    })
   .then(response => response.json())
