@@ -1,5 +1,6 @@
 package com.demo.library.controller;
 
+import com.demo.library.dto.BookDTO;
 import com.demo.library.dto.CheckoutHistoryDTO;
 import com.demo.library.model.Book;
 import com.demo.library.model.CheckoutHistory;
@@ -54,6 +55,13 @@ public class CheckoutHistoryController {
         book.setCheckedOut(false);
         bookService.save(book);
         checkoutHistoryService.deleteByBookId(id);
+        return "updated successful";
+    }
+    @PutMapping("/update-extend/{id}")
+    public String updateCheckoutExtend(@PathVariable Long id){
+        CheckoutHistory checkoutHistory=checkoutHistoryService.findByBookId(id);
+        checkoutHistory.setReturnDate(checkoutHistory.getReturnDate().plusDays(30));
+        checkoutHistoryService.save(checkoutHistory);
         return "updated successful";
     }
 

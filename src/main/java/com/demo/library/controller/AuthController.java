@@ -46,10 +46,10 @@ public class AuthController {
             System.out.println("Decoded email: " + email);
             System.out.println("Decoded password: " + password);
 
-            Optional<LibraryUser> userOptional = userService.login(email, password);
+            LibraryUser userOptional = userService.login(email, password);
 
-            if (userOptional.isPresent()) {
-                UserDTO userDTO = UserDTO.fromEntity(userOptional.get());
+            if (userOptional!=null) {
+                UserDTO userDTO = UserDTO.fromEntity(userOptional);
                 System.out.println("Returning user: " + userDTO);
                 return ResponseEntity.ok(userDTO);
             } else {

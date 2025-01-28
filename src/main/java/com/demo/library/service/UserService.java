@@ -24,9 +24,10 @@ public class UserService {
     }
 
     // Login functionality
-    public Optional<LibraryUser> login(String email, String password) {
-        return userRepository.findByEmail(email)
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()));
+    public LibraryUser login(String email, String password) {
+        LibraryUser user=userRepository.findByEmail(email).get();
+        System.out.println(user.getPassword()+" "+passwordEncoder.matches(password,user.getPassword()));
+        return user;
     }
 
     // Create new user
@@ -101,13 +102,6 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
 
-        // If password is provided, encode it
-        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
-            // Keep the existing password if not provided
-            user.setPassword(existingUser.get().getPassword());
-        }
 
         return userRepository.save(user);
     }

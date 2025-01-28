@@ -27,7 +27,7 @@ public class LibraryUser {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 500)
     private String password;
 
 
